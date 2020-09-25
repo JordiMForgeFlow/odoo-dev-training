@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_authored_books" model="ir.ui.view">
+        <field name="name">Number of authored books</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']//field[@name='comment']" position="after">
+                <field name="count_books">Number of authored books</field>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

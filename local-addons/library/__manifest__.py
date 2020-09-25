@@ -1,0 +1,17 @@
+{
+'name': "Library",
+'summary': "Manage books easily",
+'description': """Long description""",
+'author': "JordiMForgeFlow",
+'website': "http://www.example.com",
+'category': 'Uncategorized',
+'version': '13.5.1.0.0',
+'depends': ['base'],
+'data': ['views/library_book.xml',
+         'views/library_book_category.xml',
+         'views/res_partner.xml',
+         'views/library_member.xml',
+         'security/groups.xml',
+         'security/ir.model.access.csv'],
+'demo': [],
+}
