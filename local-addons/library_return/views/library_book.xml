@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_date_return" model="ir.ui.view">
+        <field name="name">Return Date</field>
+        <field name="model">library.book</field>
+        <field name="inherit_id" ref="library.library_book_view_form"/>
+        <field name="arch" type="xml">
+            <field name="author_ids" position="after">
+                <field name="date_return"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

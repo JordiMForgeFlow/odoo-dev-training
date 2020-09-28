@@ -3,6 +3,9 @@ from odoo.exceptions import UserError
 from odoo.tools.translate import _
 from datetime import timedelta
 
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class BaseArchive(models.AbstractModel):
     _name = 'base.archive'
@@ -29,7 +32,9 @@ class LibraryBook(models.Model):
 
     name = fields.Char('Title', required=True)
     short_name = fields.Char('Short Title', translate=True, index=True)
+    isbn = fields.Char('ISBN')
     notes = fields.Text('Internal Notes')
+    manager_remarks = fields.Text('Manager Remarks')
     state = fields.Selection([
         ('draft', 'Not Available'),
         ('available', 'Available'),
@@ -50,6 +55,7 @@ class LibraryBook(models.Model):
     publisher_id = fields.Many2one('res.partner', string='Publisher')
     publisher_city = fields.Char('Publisher City', related='publisher_id.city', readonly=True)
     author_ids = fields.Many2many('res.partner', string='Authors')
+    old_edition = fields.Many2one('library.book', string='Old Edition')
     reader_rating = fields.Float('Reader Average Rating', digits=(14,4))
     cost_price = fields.Float('Book Cost', digits='Book Price')
 
@@ -62,9 +68,21 @@ class LibraryBook(models.Model):
         """ This method is used to customize display name of the record """
         result = []
         for record in self:
-            rec_name = "%s (%s)" % (record.name, record.date_release)
+            authors = record.author_ids.mapped('name')
+            rec_name = "%s (%s)" % (record.name, ', '.join(authors))
             result.append((record.id, rec_name))
         return result
+
+    @api.model
+    def _name_search(self, name='', args=None, operator='ilike', limit=100, name_get_uid=None):
+        args = [] if args is None else args.copy()
+        if not(name == '' and operator == 'ilike'):
+            args += ['|', '|',
+                     ('name', operator, name),
+                     ('isbn', operator, name),
+                     ('author_ids.name', operator, name)]
+        return super(LibraryBook, self)._name_search(name=name, args=args, operator=operator, limit=limit,
+                                                     name_get_uid=name_get_uid)
 
     @api.constrains('date_release')
     def _check_release_date(self):
@@ -130,7 +148,49 @@ class LibraryBook(models.Model):
     def make_lost(self):
         self.change_state('lost')
 
-    @api.model
     def get_all_library_members(self):
         library_member_model = self.env['library.member']
         return library_member_model.search([])
+
+    def change_update_date(self):
+        self.ensure_one()
+        self.date_updated = fields.Datetime.now()
+
+    @api.model
+    def get_author_names(self, books):
+        return books.mapped('author_ids.name')
+
+    @api.model
+    def sort_books_by_date(self, books):
+        return books.sorted(key='date_release')
+
+    def grouped_data(self):
+        data = self._get_average_cost()
+        _logger.info("Groupped Data %s" % data)
+
+    @api.model
+    def _get_average_cost(self):
+        grouped_result = self.read_group(
+            [('cost_price', "!=", False)], #domain
+            ['category_id', 'cost_price:avg'], #fields to access
+            ['category_id'] #group by
+        )
+        return grouped_result
+
+    @api.model
+    def create(self, values):
+        if not self.user_has_groups('library.group_librarian'):
+            if 'manager_remarks' in values:
+                raise UserError(
+                    'You are not allowed to modify manager remarks'
+                )
+        return super(LibraryBook, self).create(values)
+
+    def write(self, values):
+        if not self.user_has_groups('library.group_librarian'):
+            if 'manager_remarks' in values:
+                raise UserError(
+                    'You are not allowed to modify manager remarks'
+                )
+        return super(LibraryBook, self).write(values)
+
