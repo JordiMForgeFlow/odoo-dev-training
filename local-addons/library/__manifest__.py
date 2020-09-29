@@ -11,6 +11,7 @@
          'views/library_book_category.xml',
          'views/res_partner.xml',
          'views/library_member.xml',
+         'views/library_book_rent.xml',
          'security/groups.xml',
          'security/ir.model.access.csv',
          'data/data.xml'],

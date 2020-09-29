@@ -7,6 +7,7 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
+
 class BaseArchive(models.AbstractModel):
     _name = 'base.archive'
     _description = 'Abstract Archive'
