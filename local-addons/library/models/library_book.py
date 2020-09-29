@@ -178,6 +178,12 @@ class LibraryBook(models.Model):
         return grouped_result
 
     @api.model
+    def _update_book_price(self):
+        all_books = self.search([])
+        for book in all_books:
+            book.cost_price += 10
+
+    @api.model
     def create(self, values):
         if not self.user_has_groups('library.group_librarian'):
             if 'manager_remarks' in values:

@@ -5,8 +5,15 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='internal_notes']//field[@name='comment']" position="after">
-                <field name="count_books">Number of authored books</field>
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page
+                    name="library_information_page"
+                    string="Library Information"
+                >
+                    <group name="library_information_group">
+                        <field name="count_books"/>
+                    </group>
+                </page>
             </xpath>
         </field>
     </record>

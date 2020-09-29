@@ -12,6 +12,7 @@
          'views/res_partner.xml',
          'views/library_member.xml',
          'security/groups.xml',
-         'security/ir.model.access.csv'],
-'demo': [],
+         'security/ir.model.access.csv',
+         'data/data.xml'],
+'demo': ['demo/demo.xml'],
 }

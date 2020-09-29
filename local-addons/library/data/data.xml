@@ -1,0 +1,23 @@
+<odoo>
+    <odoo noupdate="1">
+        <record id="res_partner_packt" model="res.partner">
+            <field name="name">Packt Publishing</field>
+            <field name="city">Birmingham</field>
+            <field name="country_id" ref="base.uk"/>
+        </record>
+    </odoo>
+
+    <odoo noupdate="1">
+         <function model="library.book" name="_update_book_price"/>
+    </odoo>
+
+    <odoo noupdate="1">
+        <record id="book_category_all" model="library.book.category"
+                forcecreate="false">
+            <field name="name">All books</field>
+        </record>
+    </odoo>
+
+
+
+</odoo>
