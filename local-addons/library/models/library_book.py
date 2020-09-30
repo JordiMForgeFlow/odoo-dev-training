@@ -132,6 +132,17 @@ class LibraryBook(models.Model):
                    ('lost', 'available')]
         return (old_state, new_state) in allowed
 
+    def average_book_occupation(self):
+        sql_query = """
+        SELECT lb.name, avg((EXTRACT(epoch from age(return_date, rent_date)) / 86400))::int
+        FROM library_book_rent AS lbr
+        JOIN library_book AS lb ON lb.id = lbr.book_id
+        WHERE lbr.state = 'returned'
+        GROUP BY lb.name;"""
+        self.env.cr.execute(sql_query)
+        result = self.env.cr.fetchall()
+        _logger.info("Average book occupation: %s", result)
+
     def change_state(self, new_state):
         for book in self:
             if book.is_allowed_transition(book.state, new_state):

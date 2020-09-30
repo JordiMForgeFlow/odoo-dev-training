@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="library_rent_wizard_view_form" model="ir.ui.view">
+        <field name="name">Rent Wizard Form</field>
+        <field name="model">library.rent.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Borrow books">
+                <sheet>
+                    <group>
+                        <field name="borrower_id"/>
+                    </group>
+                    <group>
+                        <field name="book_ids" domain="[('state', '=', 'available')]"/>
+                    </group>
+                    <group>
+                        <field name="return_date"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Rent" type="object" name="add_book_rents" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id='library_rent_wizard_action' name="Quick Rent"
+                res_model="library.rent.wizard" view_mode="form"
+                target="new"/>
+
+    <menuitem name="Rents Wizard" id="library_rent_wizard_menu"
+              parent="library_base_menu" action="library_rent_wizard_action" sequence="20"/>
+
+</odoo>

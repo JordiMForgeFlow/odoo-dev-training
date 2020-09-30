@@ -7,3 +7,9 @@ acl_library_member,library.member default,model_library_member,,1,0,0,0
 acl_library_member_librarian,library.member_librarian,model_library_member,group_librarian,1,1,1,1
 acl_library_book_rent,library.book.rent default,model_library_book_rent,,1,0,0,0
 acl_library_book_rent_librarian,library.book.rent_librarian,model_library_book_rent,group_librarian,1,1,1,1
+acl_rent_wizard,library.rent.wizard default,model_library_rent_wizard,,1,0,0,0
+acl_rent_wizard_librarian,library.rent.wizard_librarian,model_library_rent_wizard,group_librarian,1,1,1,1
+acl_return_wizard,library.return.wizard default,model_library_return_wizard,,1,0,0,0
+acl_return_wizard_librarian,library.return.wizard_librarian,model_library_return_wizard,group_librarian,1,1,1,1
+acl_rent_stats,library.book.rent.stats default,model_library_book_rent_stats,,1,0,0,0
+acl_rent_stats_librarian,library.book.rent.stats_librarian,model_library_book_rent_stats,group_librarian,1,1,1,1

@@ -10,11 +10,11 @@ class LibraryBookRent(models.Model):
     state = fields.Selection([('ongoing', 'Ongoing'),
                               ('returned', 'Returned')], 'State', default='ongoing', required=True)
     rent_date = fields.Date(default=fields.Date.today())
-    return_date = fields.Date()
+    return_date = fields.Date(required=True)
 
     @api.model
     def create(self, vals):
-        book_rec = self.env['library.book'].browse(vals['book_id'])  # returns record set from for given id
+        book_rec = self.env['library.book'].browse(vals['book_id'])  # returns record set for given id
         book_rec.make_borrowed()
         return super(LibraryBookRent, self).create(vals)
 
@@ -25,3 +25,9 @@ class LibraryBookRent(models.Model):
             'state': 'returned',
             'return_date': fields.Date.today()
         })
+
+    @api.constrains('return_date')
+    def _check_release_date(self):
+        for record in self:
+            if record.return_date and record.return_date < record.rent_date:
+                raise models.ValidationError('Return must be later than rent!')

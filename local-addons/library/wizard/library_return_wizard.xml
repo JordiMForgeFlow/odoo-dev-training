@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="library_return_wizard_view_form" model="ir.ui.view">
+        <field name="name">Return Wizard Form</field>
+        <field name="model">library.return.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Return books">
+                <sheet>
+                    <group>
+                        <field name="borrower_id"/>
+                    </group>
+                    <group>
+                        <field name="book_ids" domain="[('state', '=', 'outgoing')]"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Return books" type="object" name="books_return" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id='library_return_wizard_action' name="Quick Rent"
+                res_model="library.return.wizard" view_mode="form"
+                target="new"/>
+
+    <menuitem name="Returns Wizard" id="library_return_wizard_menu"
+              parent="library_base_menu" action="library_return_wizard_action" sequence="20"/>
+
+</odoo>
