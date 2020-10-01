@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.actions.act_window" id="action_nursery_plant">
+        <field name="name">Plants</field>
+        <field name="res_model">nursery.plant</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <menuitem name="Plant Nursery" id="nursery_main_menu"/>
+
+    <menuitem name="Plants" id="nursery_plant_menu"
+              parent="nursery_main_menu" action="action_nursery_plant"
+              sequence="1"/>
+
+    <record model="ir.ui.view" id="nursery_plant_view_form">
+        <field name="name">nursery.plant.view.form</field>
+        <field name="model">nursery.plant</field>
+        <field name="arch" type="xml">
+            <form string="Plant">
+                <sheet>
+                    <h1>
+                        <field name="name" placeholder="Plant Name"/>
+                    </h1>
+                    <notebook>
+                        <page string="Shop">
+                            <group>
+                                <field name="number_in_stock"/>
+                                <field name="price"/>
+                                <field name="order_count"/>
+                            </group>
+                        </page>
+                        <page string="Orders">
+                            <field name="order_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="nursery_plant_view_tree">
+        <field name="name">nursery.plant.view.tree</field>
+        <field name="model">nursery.plant</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="price"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="nursery_plant_view_kanban">
+        <field name="name">nursery.plant.view.kanban</field>
+        <field name="model">nursery.plant</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="image"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                <ul><li><strong>Price: <field name="price"/></strong></li></ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+</odoo>
