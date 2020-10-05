@@ -6,6 +6,6 @@
 'website': "http://www.example.com",
 'category': 'Uncategorized',
 'version': '13.5.1.0.0',
-'depends': ['base', 'account'],
-'data': ['views/contacts.xml'],
+'depends': ['base', 'library'],
+'data': ['views/members.xml'],
 }

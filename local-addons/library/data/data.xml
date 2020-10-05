@@ -5,18 +5,45 @@
             <field name="city">Birmingham</field>
             <field name="country_id" ref="base.uk"/>
         </record>
-    </odoo>
 
-    <odoo noupdate="1">
-         <function model="library.book" name="_update_book_price"/>
-    </odoo>
+        <function model="library.book" name="_update_book_price"/>
 
-    <odoo noupdate="1">
         <record id="book_category_all" model="library.book.category"
                 forcecreate="false">
             <field name="name">All books</field>
         </record>
-    </odoo>
 
+        <record id="stage_draft" model="library.rent.stage">
+            <field name="name">Draft</field>
+            <field name="sequence">1</field>
+            <field name="book_state">available</field>
+        </record>
+
+        <record id="stage_rent" model="library.rent.stage">
+            <field name="name">On rent</field>
+            <field name="sequence">5</field>
+            <field name="book_state">borrowed</field>
+        </record>
+
+        <record id="stage_due" model="library.rent.stage">
+            <field name="name">Due</field>
+            <field name="sequence">15</field>
+            <field name="book_state">borrowed</field>
+        </record>
+
+        <record id="stage_returned" model="library.rent.stage">
+            <field name="name">Completed</field>
+            <field name="sequence">25</field>
+            <field name="book_state">available</field>
+        </record>
+
+        <record id="stage_lost" model="library.rent.stage">
+            <field name="name">Lost</field>
+            <field name="sequence">35</field>
+            <field name="fold" eval="True"/>
+            <field name="book_state">lost</field>
+        </record>
+
+    </odoo>
 
 </odoo>

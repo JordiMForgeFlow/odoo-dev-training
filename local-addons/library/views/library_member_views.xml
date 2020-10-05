@@ -15,12 +15,12 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <group>
-                        <field name="partner_id"/>
+                    <group string="Member personal information" name="member_personal_info">
+                        <field name="parent_id"/>
                         <field name="member_number"/>
                         <field name="date_of_birth"/>
                     </group>
-                    <group>
+                    <group string="Date management" name="member_date_info">
                         <field name="date_start"/>
                         <field name="date_end"/>
                     </group>

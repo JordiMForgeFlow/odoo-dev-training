@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_all_members" model="ir.actions.act_window">
+        <field name="name">All members</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('library_member', '=', True)]</field>
+        <field name="limit">20</field>
+    </record>
+
+    <menuitem name="Members menu" id="customers_main_menu"/>
+
+    <menuitem id="all_costumers_menu" parent="customers_main_menu"
+              action="action_all_members" sequence="10" groups=""/>
+
+
+</odoo>

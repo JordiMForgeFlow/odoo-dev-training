@@ -2,6 +2,7 @@
 from odoo import models, fields, api
 from odoo.exceptions import UserError
 
+
 class Plant(models.Model):
     _name = 'nursery.plant'
     _description = 'Nursery Plant'

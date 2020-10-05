@@ -11,6 +11,7 @@
                     string="Library Information"
                 >
                     <group name="library_information_group">
+                        <field name="library_member"/>
                         <field name="count_books"/>
                     </group>
                 </page>

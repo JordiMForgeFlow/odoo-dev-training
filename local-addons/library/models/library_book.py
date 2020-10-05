@@ -48,7 +48,7 @@ class LibraryBook(models.Model):
     pages = fields.Integer('Number of Pages', groups='base.group_user', states={'lost': [('readonly', True)]},
                            help='Total book page count', company_dependent=False)
     out_of_print = fields.Boolean('Out of print?')
-    date_release = fields.Date('Release Date')
+    date_release = fields.Date('Release Date', groups='library.group_date_release')
     date_updated = fields.Datetime('Last Updated', copy=False)
     days_since_release = fields.Float(string="Days Since Release", compute='_compute_days_since_release',
                                       inverse='_inverse_days_since_release', search='_search_days_since_release',
