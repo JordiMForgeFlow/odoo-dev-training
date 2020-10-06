@@ -4,8 +4,9 @@ cache:
   apt: true
   directories:
     - $HOME/.cache/pip
+    - $HOME/.cache/pre-commit
 python:
-  - "3.7"
+  - "3.6"
 addons:
   apt:
     packages:
