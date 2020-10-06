@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="0">
+        <record id="mail_template_plant_order_rating" model="mail.template">
+            <field name="name">Plant: Rating Request</field>
+            <field name="email_from">${(object.rating_get_rated_partner_id().email or '') | safe}</field>
+            <field name="subject">${object.name}: Service Rating Request</field>
+            <field name="model_id" ref="plant_nursery.model_nursery_order"/>
+            <field name="partner_to">${(object.rating_get_partner_id().id)}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div>
+                    % set access_token = object.rating_get_access_token()
+                    <table style="width:600px;margin:5px auto;">
+                            <tr>
+                                <td><a href="/rating/${access_token}/10">Satisfied</a></td>
+                                <td><a href="/rating/${access_token}/5">Not Satisfied</a></td>
+                                <td><a href="/rating/${access_token}/1">Highly unsatisfied</a></td>
+                            </tr>
+                    </table>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

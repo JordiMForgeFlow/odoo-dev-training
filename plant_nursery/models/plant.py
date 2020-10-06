@@ -6,6 +6,7 @@ from odoo.exceptions import UserError
 class Plant(models.Model):
     _name = 'nursery.plant'
     _description = 'Nursery Plant'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char('Plant name', required=True)
     description = fields.Html('Description')
@@ -27,3 +28,4 @@ class Plant(models.Model):
         for plant in self:
             if plant.number_in_stock < 0:
                 raise UserError(_('Stock cannot be negative'))
+

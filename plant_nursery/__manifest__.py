@@ -8,7 +8,7 @@
 
     'category': 'Tools',
     'version': '13.5.1.0.0',
-    'depends': ['mail'],
+    'depends': ['mail', 'rating'],
     'data': [
         'security/ir.model.access.csv',
         'views/nursery_plant_views.xml',
@@ -16,7 +16,8 @@
         'views/nursery_order_views.xml',
         'views/nursery_plant_category_views.xml',
         'views/nursery_plant_tag_views.xml',
-        'data/ir_sequence_data.xml'
+        'data/ir_sequence_data.xml',
+        'data/mail_template_data.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -18,6 +18,7 @@
             <form string="Order">
                 <header>
                     <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" states="draft"/>
+                    <button string="Send Rating Request" name="action_send_rating" type="object" class="oe_highlight"/>
                     <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
                 </header>
                 <sheet>
@@ -47,6 +48,11 @@
                         </group>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                </div>
             </form>
         </field>
     </record>
@@ -71,6 +77,8 @@
         <field name="arch" type="xml">
             <kanban class="o_kanban_small_column">
                 <field name="customer_id"/>
+                <field name="activity_ids"/>
+                <field name="activity_state"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div class="oe_kanban_card oe_kanban_global_click">
@@ -80,6 +88,11 @@
                                 </div>
                                 <div class="text-muted o_kanban_record_subtitle">
                                     <field name="amount_total"/>
+                                </div>
+                                <div class="oe_kanban_bottom_left">
+                                    <div class="oe_kanban_inline_block">
+                                        <field name="activity_ids" widget="kanban_activity"/>
+                                    </div>
                                 </div>
                                 <div class="oe_clear"></div>
                             </div>
@@ -100,6 +113,12 @@
                 <field name="state"/>
                 <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirm')]"/>
                 <separator/>
+                <filter string="Late Activities" name="activities_overdue"
+                        domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Today Activities" name="activities_today"
+                        domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Future Activities" name="activities_upcoming"
+                        domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
                 <group expand="0" string="Group by">
                     <filter string="State" name="group_by_state" domain="[]" context="{'group_by': 'state'}"/>
                 </group>
