@@ -8,7 +8,8 @@ odoo.define('simple_library.tour', function (require) {
 
     tour.register('library_tour', {
         url: "/web",
-        }, [tour.STEPS.SHOW_APPS_MENU_ITEM, {
+        rainbowManMessage: "Congratulations, you are now a master of library management.",
+        }, [tour.stepUtils.showAppsMenuItem(), {
             trigger: '.o_app[data-menu-xmlid="simple_library.library_base_menu"]',
             content: _t('Manage books and authors in <b>Library app</b>.'),
             position: 'right'

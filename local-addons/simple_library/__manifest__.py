@@ -12,6 +12,6 @@
         'security/groups.xml',
         'security/ir.model.access.csv',
         'views/library_book.xml',
-        'views/templates.xml'
+        'views/simple_library_assets.xml'
     ],
 }

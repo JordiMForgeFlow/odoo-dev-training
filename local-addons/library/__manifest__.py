@@ -6,7 +6,7 @@
 'website': "http://www.example.com",
 'category': 'Library',
 'version': '13.5.1.0.0',
-'depends': ['base', 'base_setup', 'contacts'],
+'depends': ['base', 'base_setup', 'contacts', 'mail'],
 'post_init_hook': 'add_book_hook',
 'data': ['views/library_book_views.xml',
          'views/library_book_category_views.xml',

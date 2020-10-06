@@ -1,9 +1,9 @@
 from odoo import models, fields, api
 
-
 class LibraryBookRent(models.Model):
     _name = 'library.book.rent'
     _description = 'Library Book Rent'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     @api.model
     def _default_rent_stage(self):
@@ -34,6 +34,8 @@ class LibraryBookRent(models.Model):
         rent = super(LibraryBookRent, self).create(vals)
         if rent.stage_id.book_state:
             rent.book_id.state = rent.stage_id.book_state
+        rent.activity_schedule('mail.mail_activity_data_call', date_deadline=rent.return_date)
+        rent.message_subscribe(partner_ids=[rent.borrower_id.partner_id.id])
         return rent
 
     def write(self, vals):

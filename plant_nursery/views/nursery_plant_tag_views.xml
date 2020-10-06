@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="nursery_plant_tag_action" model="ir.actions.act_window">
+        <field name="name">Tags</field>
+        <field name="res_model">nursery.plant.tag</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Tags" id="nursery_plant_tag_menu"
+              action="nursery_plant_tag_action"
+              parent="nursery_settings_menu"
+              sequence="2"/>
+
+    <record id="nursery_plant_tag_view_form" model="ir.ui.view">
+        <field name="name">nursery.plant.tag.view.form</field>
+        <field name="model">nursery.plant.tag</field>
+        <field name="arch" type="xml">
+            <form string="Tag">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="nursery_plant_tag_view_list" model="ir.ui.view">
+        <field name="name">nursery.plant.tag.view.list</field>
+        <field name="model">nursery.plant.tag</field>
+        <field name="arch" type="xml">
+            <tree string="Tags">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

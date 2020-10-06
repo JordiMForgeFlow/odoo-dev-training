@@ -1,5 +1,5 @@
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
 
@@ -8,20 +8,22 @@ class Plant(models.Model):
     _description = 'Nursery Plant'
 
     name = fields.Char('Plant name', required=True)
+    description = fields.Html('Description')
     price = fields.Float()
-    order_ids = fields.One2many('nursery.order', 'plant_id', string='Orders')
-    order_count = fields.Integer(compute='_compute_order_count', store=True, string='Total orders')
+    category_id = fields.Many2one('nursery.plant.category', string='Category')
+    tag_ids = fields.Many2many('nursery.plant.tag', string='Tags')
+    order_count = fields.Integer(compute='_compute_order_count', string='Total orders')
     number_in_stock = fields.Integer()
     image = fields.Binary('Plant image', attachment=True)
+    user_id = fields.Many2one('res.users', string='Responsible', index=True, required=True,
+                              default=lambda self: self.env.user)
 
-    @api.depends('order_ids')
     def _compute_order_count(self):
         for plant in self:
-            plant.order_count = len(plant.order_ids)
+            plant.order_count = len(self.env['nursery.order.line'].search(['plant_id', '=', plant.id]))
 
-    @api.constrains('order_count', 'number_in_stock')
+    @api.constrains('number_in_stock')
     def _check_available_in_stock(self):
         for plant in self:
-            if plant.number_in_stock and plant.number_in_stock < plant.order_count:
-                raise UserError('There is only %s %s in stock but %s were sold' % (plant.number_in_stock,
-                                plant.name, plant.order_count))
+            if plant.number_in_stock < 0:
+                raise UserError(_('Stock cannot be negative'))

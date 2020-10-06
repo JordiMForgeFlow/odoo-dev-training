@@ -16,7 +16,7 @@
             <form>
                 <group>
                     <group string="Member personal information" name="member_personal_info">
-                        <field name="parent_id"/>
+                        <field name="partner_id"/>
                         <field name="member_number"/>
                         <field name="date_of_birth"/>
                     </group>
